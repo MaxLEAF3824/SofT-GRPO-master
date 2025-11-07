@@ -19,11 +19,11 @@
 
 
 
-## 📧 Welcome for feedback
+## 📧 Welcome to feedback
 
 We greatly appreciate your feedback and questions regarding the current status of this work. 
 
-Please feel free to contact Zhi Zheng by [zhi.zheng@u.nus.edu](zhi.zheng@u.nus.edu)
+Please feel free to contact Zhi Zheng at [zhi.zheng@u.nus.edu](zhi.zheng@u.nus.edu)
 
 
 ## 💡 Highlights
@@ -32,7 +32,7 @@ Please feel free to contact Zhi Zheng by [zhi.zheng@u.nus.edu](zhi.zheng@u.nus.e
 
 - ⚙️ **Gumbel-Softmax Noise in Rollout:** It integrates the Gumbel-Softmax technique into the group rollout process, actively obtaining diverse but valid soft-thinking reasoning paths.
 
-- ⚙️ **Gumbel Reparameterization :** We propose an innovative gradient estimation approach via Gumbel reparameterization, enabling precise attribution of improvements to the LLM’s output probability distributions in policy optimization. 
+- ⚙️ **Gumbel Reparameterization:** We propose an innovative gradient estimation approach via Gumbel reparameterization, enabling precise attribution of improvements to the LLM’s output probability distributions in policy optimization. 
 
 - 🔥 **Comprehensive Experiments and High Effectiveness:** We conduct comprehensive experiments across LLMs of 1.5B–7B parameters on five benchmarks, demonstrating that SofT-GRPO consistently outperforms the discrete-token GRPO baselines, especially at higher sample rates (Pass@16 and Pass@32). 
 
@@ -54,7 +54,7 @@ cd SofT-GRPO-master
 ```
 
 ### 2. Install dependencies
-##### Option1: For inference only,
+##### Option 1: For inference only,
 ```bash
 conda create -n st python=3.11 -y && conda activate st
 pip install --upgrade pip
@@ -66,7 +66,7 @@ pip install -e "python[all]"
 cd ../..
 ```
 
-##### Option2: For inference & SofT-GRPO fine-tuning,
+##### Option 2: For inference & SofT-GRPO fine-tuning,
 ```bash
 pip install -r requirements.txt
 ```
@@ -135,4 +135,4 @@ If you find our work helpful for your research, please consider giving a star �
 - [Soft-Thinking](https://github.com/eric-ai-lab/Soft-Thinking): The codebase we built upon. Thanks for their wonderful work.
 - [verl-0.4.x](https://github.com/volcengine/verl/tree/v0.4.x): Our work is based on this codebase as well.
 - [SIM-CoT](https://github.com/InternLM/SIM-CoT): We use their template for README.md!
-- [Yu Gu](https://github.com/kuangrepi): Undergraduate student from Nanjing University, volunteer for helping in code Re-organization!
+- [Yu Gu](https://github.com/kuangrepi): Undergraduate student from Nanjing University, volunteer for helping in code re-organization!
