@@ -3,7 +3,7 @@
 </p> -->
 
 <div align="center">
-    <h1 align="center"> SofT-GRPO: Reinforcing the LLM Soft-Thinking Policy with Gumbel Reparameterization
+    <h1 align="center"> SofT-GRPO: Surpassing Discrete-Token LLM Reinforcement Learning via Gumbel-Reparameterized Soft-Thinking Policy Optimization
     </h1>
 </div>
 
@@ -34,7 +34,9 @@ Please feel free to contact Zhi Zheng at [zhi.zheng@u.nus.edu](zhi.zheng@u.nus.e
 
 - ⚙️ **Gumbel Reparameterization:** We propose an innovative gradient estimation approach via Gumbel reparameterization, enabling precise attribution of improvements to the LLM’s output probability distributions in policy optimization. 
 
-- 🔥 **Comprehensive Experiments and High Effectiveness:** We conduct comprehensive experiments across LLMs of 1.5B–7B parameters on five benchmarks, demonstrating that SofT-GRPO consistently outperforms the discrete-token GRPO baselines, especially at higher sample rates (Pass@16 and Pass@32). 
+- 📝 **Comprehensive Experiments and High Effectiveness:** We conduct comprehensive experiments across LLMs of 1.5B–7B parameters on five benchmarks, demonstrating that SofT-GRPO consistently outperforms the discrete-token GRPO baselines, especially at higher sample rates (Pass@16 and Pass@32). SofT-GRPO can also improve the out-of-Domain generalization ability of LLMs.
+ 
+- 🔥 **Showing the Prospects of Soft-Thinking:** Can Soft-Thinking be the Answer for Better Effectiveness?
 
 ## 📜 News
 
@@ -58,9 +60,8 @@ cd SofT-GRPO-master
 ```bash
 conda create -n st python=3.11 -y && conda activate st
 pip install --upgrade pip
-pip install torch==2.6.0 transformers accelerate jsonlines math_verify openai torch_memory_saver
-pip install flash_attn --no-build-isolation # may take more time (20min). For faster installation, use pre-built wheels from https://github.com/Dao-AILab/flash-attention/releases.
-                                            # try `pip install flash_attn==2.7.3 --no-build-isolation` if find undefined symbol bug.
+pip install torch==2.6.0 transformers==4.51.1 accelerate==1.10.1 jsonlines math_verify openai torch_memory_saver
+pip install flash_attn --no-build-isolation # may take more time (20min). try `pip install flash_attn==2.7.3 --no-build-isolation` if find undefined symbol bug, or try downloading from its official github.
 
 cd Soft-Thinking+noise+loss-main/sglang_soft_thinking_pkg
 pip install -e "python[all]"
