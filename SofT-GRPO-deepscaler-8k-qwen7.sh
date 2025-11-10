@@ -50,7 +50,7 @@ actor_rollout_ref.ref.strategy=fsdp2 \
 algorithm.use_kl_in_reward=False \
 trainer.critic_warmup=0 \
 trainer.logger=['console','tensorboard'] \
-trainer.project_name='verl_soft-thinking-grpo_example_gsm8k_0_1_0_95_qwen3b' \
+trainer.project_name='verl_soft-thinking-grpo_example_deepscaler_0_1_0_95_qwen7b' \
 trainer.experiment_name='8k-train' \
 trainer.val_before_train=True \
 trainer.n_gpus_per_node=8 \
@@ -58,7 +58,7 @@ trainer.nnodes=1 \
 trainer.save_freq=200 \
 trainer.test_freq=20 \
 trainer.default_hdfs_dir=null \
-trainer.default_local_dir=********************************/verl-save/verl_soft-thinking-grpo_deepscaler-0-1-0-95_qwen3b/8k-train \
+trainer.default_local_dir=********************************/verl-save/verl_soft-thinking-grpo_deepscaler-0-1-0-95_qwen7b/8k-train \
 trainer.total_epochs=1
 
 EOF
