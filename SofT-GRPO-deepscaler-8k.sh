@@ -15,7 +15,7 @@ actor_rollout_ref.actor.ppo_mini_batch_size=32 \
 actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu=2 \
 actor_rollout_ref.actor.use_kl_loss=True \
 actor_rollout_ref.actor.ppo_max_token_len_per_gpu=30720 \
-actor_rollout_ref.actor.kl_loss_coef=0.002 \
+actor_rollout_ref.actor.kl_loss_coef=0.001 \
 actor_rollout_ref.actor.kl_loss_type=low_var_kl \
 actor_rollout_ref.actor.entropy_coeff=0 \
 actor_rollout_ref.model.enable_gradient_checkpointing=False \
@@ -50,7 +50,7 @@ actor_rollout_ref.ref.strategy=fsdp2 \
 algorithm.use_kl_in_reward=False \
 trainer.critic_warmup=0 \
 trainer.logger=['console','tensorboard'] \
-trainer.project_name='verl_soft-thinking-grpo_example_gsm8k_run2' \
+trainer.project_name='verl_soft-thinking-grpo_example_gsm8k_run' \
 trainer.experiment_name='8k-train' \
 trainer.val_before_train=True \
 trainer.n_gpus_per_node=8 \
@@ -58,7 +58,7 @@ trainer.nnodes=1 \
 trainer.save_freq=200 \
 trainer.test_freq=40 \
 trainer.default_hdfs_dir=null \
-trainer.default_local_dir=********************************/verl-save/verl_soft-thinking-grpo_deepscaler_run2/8k-train \
+trainer.default_local_dir=********************************/verl-save/verl_soft-thinking-grpo_deepscaler_run/8k-train \
 trainer.total_epochs=1
 
 EOF
