@@ -40,7 +40,7 @@ Please feel free to contact Zhi Zheng at [zhi.zheng@u.nus.edu](zhi.zheng@u.nus.e
 
 ## 📜 News
 
-**[2025/9/24]** [Code]() [Weight]() and [Paper](https://arxiv.org/pdf/2509.20317) are released!
+**[2025/9/24]** [Code](), [Weight](), and [Paper](https://arxiv.org/pdf/2509.20317) are released!
 
 ## 👨‍💻 Todo
 
@@ -58,9 +58,9 @@ cd SofT-GRPO-master
 ### 2. Install dependencies
 ##### Option 1: For inference only,
 ```bash
-conda create -n soft_grpo python=3.11 -y && conda activate soft_grpo
-pip install --upgrade pip
-pip install torch==2.6.0 transformers==4.51.1 accelerate==1.10.1 torch_memory_saver==0.0.8 uvloop==0.21.0 jsonlines math_verify openai
+conda create -n soft_grpo python=3.11.13 -y && conda activate soft_grpo
+pip install pip==25.2
+pip install torch==2.6.0 transformers==4.51.1 tensorboard==2.20.0 sgl_kernel==0.1.1 accelerate==1.10.1 torch_memory_saver==0.0.8 uvloop==0.21.0 jsonlines math_verify openai
 pip install flash_attn==2.7.3  --no-build-isolation # may take more time (20min). try `pip install flash_attn==2.7.3 --no-build-isolation` if find undefined symbol bug, or try downloading from its official github.
 
 cd Soft-Thinking+noise+loss-main/sglang_soft_thinking_pkg
@@ -69,14 +69,17 @@ cd ../..
 ```
 
 ##### Option 2: For inference & SofT-GRPO fine-tuning,
-```bash
-pip install -r requirements.txt
-```
-or building the verl-0.4.x after doing the Option1.
+
+building the verl-0.4.x after doing the Option1.
 ```bash
 cd verl-0.4.x
-pip3 install --no-deps -e .
+pip3 install -e .
 cd ..
+```
+
+or trying to install requirements. (not recommended)
+```bash
+pip install -r requirements.txt
 ```
 
 
