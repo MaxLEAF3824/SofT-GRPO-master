@@ -126,6 +126,24 @@ pip install -r requirements.txt
 ```
 
 
+---
+
+### Alternative: Using Docker
+
+For a quick and reproducible setup, a pre-built Docker image is also available on GitHub Packages. You can pull and run it with the following commands:
+
+#### Step 1: Pull the pre-built image from GitHub Packages
+
+```bash
+docker pull ghcr.io/kuangrepi/soft-grpo:latest
+```
+
+#### Step 2: Run the container with GPU access and an interactive shell
+
+```bash
+docker run --gpus all -it --rm ghcr.io/kuangrepi/soft-grpo:latest
+```
+
 
 
 ## ✒️ Citation
@@ -150,3 +168,4 @@ If you find our work helpful for your research, please consider giving a star �
 - [verl-0.4.x](https://github.com/volcengine/verl/tree/v0.4.x): Our work is based on this codebase as well.
 - [SIM-CoT](https://github.com/InternLM/SIM-CoT): We use their template for README.md!
 - [Yu Gu](https://github.com/kuangrepi): Undergraduate student from Nanjing University, volunteer for helping in code re-organization!
+
