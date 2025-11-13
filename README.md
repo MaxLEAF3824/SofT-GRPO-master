@@ -151,14 +151,11 @@ docker run --gpus all -it --rm ghcr.io/kuangrepi/soft-grpo:latest
 If you find our work helpful for your research, please consider giving a star ⭐ and citation 📝
 
 ```bibtex
-@misc{zheng2025softgrposurpassingdiscretetokenllm,
-      title={SofT-GRPO: Surpassing Discrete-Token LLM Reinforcement Learning via Gumbel-Reparameterized Soft-Thinking Policy Optimization}, 
-      author={Zhi Zheng and Wee Sun Lee},
-      year={2025},
-      eprint={2511.06411},
-      archivePrefix={arXiv},
-      primaryClass={cs.AI},
-      url={https://arxiv.org/abs/2511.06411}, 
+@article{zheng2025soft,
+  title={SofT-GRPO: Surpassing Discrete-Token LLM Reinforcement Learning via Gumbel-Reparameterized Soft-Thinking Policy Optimization},
+  author={Zheng, Zhi and Lee, Wee Sun},
+  journal={arXiv preprint arXiv:2511.06411},
+  year={2025}
 }
 ```
 
@@ -168,4 +165,5 @@ If you find our work helpful for your research, please consider giving a star �
 - [verl-0.4.x](https://github.com/volcengine/verl/tree/v0.4.x): Our work is based on this codebase as well.
 - [SIM-CoT](https://github.com/InternLM/SIM-CoT): We use their template for README.md!
 - [Yu Gu](https://github.com/kuangrepi): Undergraduate student from Nanjing University, volunteer for helping in code re-organization!
+
 
