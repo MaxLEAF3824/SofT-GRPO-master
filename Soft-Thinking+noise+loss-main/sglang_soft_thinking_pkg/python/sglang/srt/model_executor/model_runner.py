@@ -1007,7 +1007,7 @@ class ModelRunner:
         # ==========
         if self.enable_soft_thinking:
             return self.model.forward(
-                None,
+                forward_batch.input_ids,# overlap DEBUG
                 forward_batch.positions,
                 forward_batch,
             )

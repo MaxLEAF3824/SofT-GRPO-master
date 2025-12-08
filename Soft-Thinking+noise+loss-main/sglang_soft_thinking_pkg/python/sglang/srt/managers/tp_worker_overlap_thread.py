@@ -51,31 +51,26 @@ def resolve_future_token_ids(input_ids, future_token_ids_map):
 # ==========
 # begin of soft thinking
 # ==========
-# TODO@Ao: 初始化topk info为-1 tensor而不是None
+# overlap DEBUG
 @torch.compile(dynamic=True, backend=get_compiler_backend())
-def resolve_future_topk_info(
-    topk_probs, topk_indices, future_topk_probs_map, future_topk_indices_map
+def resolve_future_topk_info_from_slot(
+    topk_probs: torch.Tensor,
+    topk_indices: torch.Tensor,
+    slot_ids: torch.Tensor,
+    future_topk_probs_map: torch.Tensor,
+    future_topk_indices_map: torch.Tensor,
 ):
-    # 直接比较（topk_indices 已经是 Tensor，且 None 已被替换为 -1） Dim wrong
-    # mask = topk_indices < 0
-    # topk_probs[:] = torch.where(
-    #     mask,
-    #     future_topk_probs_map[torch.clamp(-topk_indices, min=0)],
-    #     topk_probs,
-    # )
-    # topk_indices[:] = torch.where(
-    #     mask,
-    #     future_topk_indices_map[torch.clamp(-topk_indices, min=0)],
-    #     topk_indices,
-    # )
-    mask = topk_indices < 0
-    b, k = topk_probs.shape
-    row_idx = torch.arange(b, device=topk_probs.device).unsqueeze(1).expand(-1, k)
-    col_idx = torch.clamp(-topk_indices, min=0)
-    fill_probs = future_topk_probs_map[row_idx, col_idx]
-    fill_indices = future_topk_indices_map[row_idx, col_idx]
-    topk_probs[:] = torch.where(mask, fill_probs, topk_probs)
-    topk_indices[:] = torch.where(mask, fill_indices, topk_indices)
+    valid_mask = slot_ids >= 0
+    if not torch.any(valid_mask):
+        return
+
+    # Gather soft top-k for all valid slots and write back to corresponding batch rows.
+    valid_slots = slot_ids[valid_mask]                     # [B_valid]
+    gathered_probs = future_topk_probs_map[valid_slots]    # [B_valid, K]
+    gathered_indices = future_topk_indices_map[valid_slots]
+
+    topk_probs[valid_mask] = gathered_probs
+    topk_indices[valid_mask] = gathered_indices
 
 
 # ==========
@@ -172,79 +167,74 @@ class TpModelWorkerClient:
             logger.error(f"TpModelWorkerClient hit an exception: {traceback}")
             self.parent_process.send_signal(signal.SIGQUIT)
 
+    # overlap DEBUG
     @DynamicGradMode()
     def forward_thread_func_(self):
+        """Forward thread for overlap mode: resolve hard futures and propagate slot ids."""
         batch_pt = 0
         batch_lists = [None] * 2
+
         while True:
             model_worker_batch, future_token_ids_ct = self.input_queue.get()
             if not model_worker_batch:
                 break
 
-            # Keep a reference of model_worker_batch by storing it into a list.
-            # Otherwise, the tensor members of model_worker_batch will be released
-            # by pytorch and cause CUDA illegal memory access errors.
             batch_lists[batch_pt % 2] = model_worker_batch
             batch_pt += 1
-            # Create event
+
             copy_done = torch.get_device_module(self.device).Event()
-            # print(self.max_running_requests)
-            # Resolve future tokens in the input
+
+            # Resolve hard token futures
             input_ids = model_worker_batch.input_ids
-            # print(model_worker_batch)
+            raw_input_ids = None
+            if self.enable_soft_thinking and model_worker_batch.forward_mode.is_decode():
+                raw_input_ids = input_ids.clone()
             resolve_future_token_ids(input_ids, self.future_token_ids_map)
-            # ==========
-            # begin of soft thinking
-            # ==========
-            if self.enable_soft_thinking:
+
+            # Optionally resolve soft futures if topk_* buffer is provided
+            slot_ids = None
+            if (
+                self.enable_soft_thinking
+                and model_worker_batch.forward_mode.is_decode()
+                and raw_input_ids is not None
+            ):
+                slot_ids = torch.where(
+                    raw_input_ids < 0,
+                    -raw_input_ids,
+                    torch.full_like(raw_input_ids, -1),
+                    ).view(-1)
+
                 topk_probs = model_worker_batch.topk_probs
                 topk_indices = model_worker_batch.topk_indices
-                # sampling_info = model_worker_batch.sampling_info
-                # # soft_thinking_mask = sampling_info.soft_thinking_modes  # [batch_size]
-                # # TODO: 这个逻辑有问题，是string
-                # # TODO: 整段都不对，但是没被采用： The total file has some errors but are not adopted in generation.
-                # think_end_mask = (input_ids == self.think_end_str)  # [batch_size]
-                print(topk_probs, topk_indices)
-                # Only process sequences where soft_thinking_modes=True and input_id=think_end_str
-                update_mask = (topk_indices == 0).all(-1)
+                if topk_probs is not None and topk_indices is not None:
+                    resolve_future_topk_info_from_slot(
+                        topk_probs,
+                        topk_indices,
+                        slot_ids,
+                        self.future_topk_probs_map,
+                        self.future_topk_indices_map,
+                    )
 
-                if update_mask.any():
-                    # Reset soft_thinking_modes for matching sequences
-                    # sampling_info.soft_thinking_modes[update_mask] = False
-
-                    # Reinitialize topk_probs and topk_indices as one-hot for matching sequences
-                    topk_probs[update_mask] = float('nan')
-                    topk_indices[update_mask] = -1
-
-                    # Set one-hot probabilities and store input_id at the first position
-                    topk_probs[update_mask, 0] = 1.0  # One-hot probability at index 0
-                    topk_indices[update_mask, 0] = input_ids[update_mask]
-
-                # Update future_topk_info
-                # resolve_future_topk_info(
-                #     topk_probs, topk_indices,
-                #     self.future_topk_probs_map,
-                #     self.future_topk_indices_map,
-                # )
-
-                batch_len = len(model_worker_batch.seq_lens)
-                future_slice = slice(future_token_ids_ct + 1, future_token_ids_ct + 1 + batch_len)
-                self.future_topk_probs_map[future_slice] = topk_probs
-                self.future_topk_indices_map[future_slice] = topk_indices
-            # ==========
-            # end of soft thinking
-            # ==========
-            '''
-            '''
-            # Run forward
+            # Forward
             logits_output, next_token_ids = self.worker.forward_batch_generation(
                 model_worker_batch
             )
-            # Update the future token ids map
+
+            # Attach slot ids for scheduler-side soft map update
+            if (
+                self.enable_soft_thinking
+                and model_worker_batch.forward_mode.is_decode()
+                and slot_ids is not None
+            ):
+                logits_output.slot_ids = slot_ids
+
+            # Update hard token futures
             bs = len(model_worker_batch.seq_lens)
-            self.future_token_ids_map[
-            future_token_ids_ct + 1: future_token_ids_ct + bs + 1
-            ] = next_token_ids
+            future_slice = slice(
+                future_token_ids_ct + 1,
+                future_token_ids_ct + 1 + bs,
+                )
+            self.future_token_ids_map[future_slice] = next_token_ids
 
             # Copy results to the CPU
             if model_worker_batch.return_logprob:

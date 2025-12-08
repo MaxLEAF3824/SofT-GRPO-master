@@ -1646,7 +1646,9 @@ class ScheduleBatch(ScheduleBatchDisaggregationDecodeMixin):
         if self.spec_info:
             self.spec_info.merge_batch(other.spec_info)
 
+    # overlap DEBUG
     def get_model_worker_batch(self) -> ModelWorkerBatch:
+
         if self.forward_mode.is_decode_or_idle():
             extend_seq_lens = extend_prefix_lens = extend_logprob_start_lens = None
         else:
@@ -1654,11 +1656,10 @@ class ScheduleBatch(ScheduleBatchDisaggregationDecodeMixin):
             extend_prefix_lens = self.prefix_lens
             extend_logprob_start_lens = self.extend_logprob_start_lens
 
-        # Create seq_lens_cpu when needed
         if (
                 (
-                        global_server_args_dict["use_mla_backend"]
-                        and global_server_args_dict["attention_backend"] == "flashinfer"
+                    global_server_args_dict["use_mla_backend"]
+                    and global_server_args_dict["attention_backend"] == "flashinfer"
                 )
                 or global_server_args_dict["attention_backend"] == "flashmla"
                 or global_server_args_dict["attention_backend"] == "fa3"
@@ -1676,12 +1677,18 @@ class ScheduleBatch(ScheduleBatchDisaggregationDecodeMixin):
         # ==========
         # begin of soft thinking
         # ==========
+        # construct topk_* only for decode mode
         topk_probs = None
         topk_indices = None
-        if self.model_config.enable_soft_thinking:
-            if self.enable_overlap or self.forward_mode.is_decode():
+        if self.model_config.enable_soft_thinking and self.forward_mode.is_decode():
+            if not self.enable_overlap:
+                # Non-overlap + DECODE: stack Req.topk_* .
                 topk_probs = torch.stack([req.topk_prob for req in self.reqs])
                 topk_indices = torch.stack([req.topk_idx for req in self.reqs])
+            else:
+                # Overlap + DECODE: do not fill soft top-k here.
+                topk_probs = None
+                topk_indices = None
 
         capture_hidden_mode = self._get_capture_hidden_mode()
         # ==========
