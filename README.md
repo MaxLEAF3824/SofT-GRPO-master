@@ -42,9 +42,7 @@ Please feel free to contact Zhi Zheng at [zhi.zheng@u.nus.edu](zhi.zheng@u.nus.e
 
 **[2025/9/24]** [Code](https://github.com/zz1358m/SofT-GRPO-master), [Weight](https://huggingface.co/zz1358m/SofT-GRPO-master), and [Paper](https://arxiv.org/abs/2511.06411) are released!
 
-## 👨‍💻 Todo
-
-- [x] SGLang & verl Code Modification (e.g., activate the overlap for efficiency).
+**[2025/12/9]** [√] SGLang & verl Code Modification (e.g., activate the overlap for efficiency).
 
 
 ## 🛠️ Usage
@@ -165,5 +163,6 @@ If you find our work helpful for your research, please consider giving a star �
 - [verl-0.4.x](https://github.com/volcengine/verl/tree/v0.4.x): Our work is based on this codebase as well.
 - [SIM-CoT](https://github.com/InternLM/SIM-CoT): We use their template for README.md!
 - [Yu Gu](https://github.com/kuangrepi): Undergraduate student from Nanjing University, volunteer for helping in code re-organization!
+
 
 
