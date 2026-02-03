@@ -15,13 +15,16 @@ _ENABLE_JIT_DEEPGEMM = False
 if is_cuda():
     import deep_gemm
     from deep_gemm import get_num_sms
-    from deep_gemm.jit_kernels.gemm import get_best_configs
-    from deep_gemm.jit_kernels.gemm import includes as deep_gemm_includes
-    from deep_gemm.jit_kernels.gemm import template as deep_gemm_gemm_template
-    from deep_gemm.jit_kernels.m_grouped_gemm import (
-        template as deep_gemm_grouped_gemm_template,
-    )
-    from deep_gemm.jit_kernels.tuner import jit_tuner
+    try:
+        from deep_gemm.jit_kernels.gemm import get_best_configs
+        from deep_gemm.jit_kernels.gemm import includes as deep_gemm_includes
+        from deep_gemm.jit_kernels.gemm import template as deep_gemm_gemm_template
+        from deep_gemm.jit_kernels.m_grouped_gemm import (
+            template as deep_gemm_grouped_gemm_template,
+        )
+        from deep_gemm.jit_kernels.tuner import jit_tuner
+    except Exception as e:
+        print("WARNING:",e)
 
     sm_version = get_device_sm()
     if sm_version == 90:

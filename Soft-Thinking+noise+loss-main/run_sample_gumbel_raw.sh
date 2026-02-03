@@ -1,7 +1,7 @@
 
 python run_sglang_softthinking.py \
     --dataset "aime2024" \
-    --model_name ********************************/meta-llama/DeepSeek-R1-Distill-Qwen-1.5B \
+    --model_name deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B \
     --max_topk 30 \
     --max_generated_tokens 32768 \
     --temperature 0.6 \
@@ -24,7 +24,7 @@ python run_sglang_softthinking.py \
 
 python run_sglang_softthinking.py \
     --dataset "aime2025" \
-    --model_name ********************************/meta-llama/DeepSeek-R1-Distill-Qwen-1.5B \
+    --model_name deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B \
     --max_topk 30 \
     --max_generated_tokens 32768 \
     --temperature 0.6 \
@@ -47,7 +47,7 @@ python run_sglang_softthinking.py \
 
 python run_sglang_softthinking.py \
     --dataset "amc23" \
-    --model_name ********************************/meta-llama/DeepSeek-R1-Distill-Qwen-1.5B \
+    --model_name deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B \
     --max_topk 30 \
     --max_generated_tokens 32768 \
     --temperature 0.6 \
@@ -70,7 +70,7 @@ python run_sglang_softthinking.py \
 
 python run_sglang_softthinking.py \
     --dataset "math500" \
-    --model_name ********************************/meta-llama/DeepSeek-R1-Distill-Qwen-1.5B \
+    --model_name deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B \
     --max_topk 30 \
     --max_generated_tokens 32768 \
     --temperature 0.6 \
@@ -93,7 +93,7 @@ python run_sglang_softthinking.py \
 
 python run_sglang_softthinking.py \
     --dataset "gsm8k" \
-    --model_name ********************************/meta-llama/DeepSeek-R1-Distill-Qwen-1.5B \
+    --model_name deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B \
     --max_topk 30 \
     --max_generated_tokens 32768 \
     --temperature 0.6 \
@@ -116,7 +116,7 @@ python run_sglang_softthinking.py \
 
 python run_sglang_softthinking.py \
     --dataset "gpqa_diamond" \
-    --model_name ********************************/meta-llama/DeepSeek-R1-Distill-Qwen-1.5B \
+    --model_name deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B \
     --max_topk 30 \
     --max_generated_tokens 32768 \
     --temperature 0.6 \
@@ -140,7 +140,7 @@ python run_sglang_softthinking.py \
 
 python run_sglang_softthinking.py \
     --dataset "humaneval" \
-    --model_name ********************************/meta-llama/DeepSeek-R1-Distill-Qwen-1.5B \
+    --model_name deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B \
     --max_topk 30 \
     --max_generated_tokens 32768 \
     --temperature 0.6 \
@@ -163,7 +163,7 @@ python run_sglang_softthinking.py \
 
 python run_sglang_softthinking.py \
     --dataset "mbpp" \
-    --model_name ********************************/meta-llama/DeepSeek-R1-Distill-Qwen-1.5B \
+    --model_name deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B \
     --max_topk 30 \
     --max_generated_tokens 32768 \
     --temperature 0.6 \
@@ -187,7 +187,7 @@ python run_sglang_softthinking.py \
 
 python run_sglang_softthinking.py \
     --dataset "humaneval" \
-    --model_name ********************************/meta-llama/DeepSeek-R1-Distill-Qwen-1.5B \
+    --model_name deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B \
     --max_topk 30 \
     --max_generated_tokens 32768 \
     --temperature 0.6 \
@@ -211,7 +211,7 @@ python run_sglang_softthinking.py \
 
 python run_sglang_softthinking.py \
     --dataset "mbpp" \
-    --model_name ********************************/meta-llama/DeepSeek-R1-Distill-Qwen-1.5B \
+    --model_name deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B \
     --max_topk 30 \
     --max_generated_tokens 32768 \
     --temperature 0.6 \
