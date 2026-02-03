@@ -11,3 +11,5 @@ cd ../..
 cd verl-0.4.x
 pip3 install -e .
 cd ..
+
+pip install cachetools transformers==4.54.0
