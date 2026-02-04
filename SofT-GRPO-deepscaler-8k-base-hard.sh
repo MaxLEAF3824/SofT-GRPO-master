@@ -60,5 +60,7 @@ trainer.save_freq=200 \
 trainer.test_freq=40 \
 trainer.default_hdfs_dir=null \
 trainer.default_local_dir=./verl-save/verl_soft-thinking-grpo_deepscaler_run/8k-train-qwen3-1.7b-base \
+trainer.resume_mode='disable' \
+trainer.resume_from_path=null \
 trainer.total_epochs=1
 
