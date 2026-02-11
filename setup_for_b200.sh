@@ -17,5 +17,5 @@ pip install triton==3.3.1 \
 transformers==4.54.0 \
 sgl-kernel==0.3.16.post6
 
-pip install flash_attn==2.7.1 --no-build-isolation
+pip install flash_attn==2.7.3 --no-build-isolation
 pip install --upgrade flashinfer-python

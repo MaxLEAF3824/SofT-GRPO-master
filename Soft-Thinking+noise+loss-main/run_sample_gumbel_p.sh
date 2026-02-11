@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+nvidia#!/usr/bin/env bash
 
 set -e
 
@@ -31,6 +31,10 @@ for i in "${!datasets[@]}"; do
     --end_idx 1000 \
     --num_gpus 1 \
     --num_samples 32 \
+    --enable_soft_thinking \
+    --add_noise_gumbel_softmax \
+    --gumbel_softmax_temperature 0.5 \
+    --noise_factor 1 \
     > "log_${datasets[$i]}.out" 2>&1 &
 done
 
