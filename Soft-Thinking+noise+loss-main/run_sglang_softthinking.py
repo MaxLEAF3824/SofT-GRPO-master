@@ -283,7 +283,7 @@ Test Cases:
             print(f"Number of GPUs available: {num_gpus}", flush=True)
             llm = sgl.Engine(
                 model_path=model_name,
-                tp_size=num_gpus,
+                dp_size=num_gpus,
                 log_level="info",
                 trust_remote_code=True,
                 random_seed=random_seed,

@@ -2,17 +2,17 @@
 
 set -e
 
-model_name="/workspace/chrihan/yiqiuguo/Qwen3-1.7B-Base-SoftGRPO-157"
+model_name="/workspace/yiqiuguo/SofT-GRPO-master/saved_weight/Qwen3-1.7B-Base-SoftGRPO-157"
 
 datasets=(
-  aime2024
-  aime2025
+  # aime2024
+  # aime2025
   math500
   amc23
 )
-
+CUDA_VISIBLE_DEVICES=0,1,2,3
 for i in "${!datasets[@]}"; do
-  CUDA_VISIBLE_DEVICES=$i \
+  # CUDA_VISIBLE_DEVICES=$i \
   python run_sglang_softthinking.py \
     --dataset "${datasets[$i]}" \
     --model_name "$model_name" \
@@ -29,9 +29,13 @@ for i in "${!datasets[@]}"; do
     --mem_fraction_static 0.9 \
     --start_idx 0 \
     --end_idx 1000 \
-    --num_gpus 1 \
+    --num_gpus 4 \
     --num_samples 32 \
-    > "log_${datasets[$i]}.out" 2>&1 &
+    > "log_${datasets[$i]}.out" 2>&1
 done
 
+    # --enable_soft_thinking \
+    # --add_noise_gumbel_softmax \
+    # --gumbel_softmax_temperature 0.5 \
+    # --noise_factor 1 \
 echo "✅ All jobs submitted."
