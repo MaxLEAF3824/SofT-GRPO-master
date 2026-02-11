@@ -2,7 +2,7 @@ nvidia#!/usr/bin/env bash
 
 set -e
 
-model_name="/root/SofT-GRPO-master/saved_weight/Qwen3-1.7B-Base-SoftGRPO-157"
+model_name="/workspace/chrihan/yiqiuguo/Qwen3-1.7B-Base-SoftGRPO-157"
 
 datasets=(
   aime2024
